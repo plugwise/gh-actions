@@ -14,9 +14,9 @@ inputs:
   fail-on-miss:
     required: false
     default: "true"  # Default fail if not available
-  run-commands:
+  run-command:
     required: false
-    default: []  # Any commands to run and cache
+    default: ""  # Any commands to run and cache
 
 runs:
   using: "composite"
@@ -33,4 +33,4 @@ runs:
         venv-dir: ${{ inputs.venv-dir }}
         precommit-home: ${{ inputs.precommit-home }}
         fail-on-miss: ${{ inputs.fail-on-miss }}
-        run-commands: ${{ inputs.run-commands }}
+        run-command: ${{ inputs.run-command }}
