@@ -56,7 +56,7 @@ runs:
       if: ${{ inputs.run-command != '' }}
       shell: bash
       run: |
-       ${{ input.run-command }}
+       ${{ inputs.run-command }}
     - name: Save cache if (purposely) created
       if: ${{ inputs.fail-on-miss == 'false' && steps.cache-create.outputs.cache-hit != 'true' }}
       uses: actions/cache/save@v4
