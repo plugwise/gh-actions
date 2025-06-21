@@ -53,7 +53,7 @@ runs:
         source ${{ inputs.venv-dir }}/bin/activate
         pre-commit install-hooks
     - name: Run any additional command
-      if: ${{ inputs.run-command != "" }}
+      if: ${{ inputs.run-command != '' }}
       shell: bash
       run: |
        ${{ input.run-command }}
