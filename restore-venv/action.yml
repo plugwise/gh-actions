@@ -15,6 +15,10 @@ inputs:
     required: false
     default: "true"  # Default fail if not available
 
+  manual_clone_ha:
+    required: false
+    default: "manual_clone_ha"  # Directory for original clone
+
 runs:
   using: "composite"
   steps:
@@ -25,6 +29,7 @@ runs:
         path: |
           ${{ inputs.venv-dir }}
           ${{ inputs.precommit-home }}
+          ${{ inputs.manual_clone_ha }}
         key: ${{ inputs.cache-key }}
     - name: Create Python virtual environment
       if: ${{ steps.cache-create.outputs.cache-hit != 'true' }}
@@ -52,6 +57,7 @@ runs:
         path: |
           ${{ inputs.venv-dir }}
           ${{ inputs.precommit-home }}
+          ${{ inputs.manual_clone_ha }}
     - name: Fail job if Python cache restore failed
       if: ${{ inputs.fail-on-miss == 'true' && steps.cache-create.outputs.cache-hit != 'true' }}
       shell: bash
