@@ -31,8 +31,8 @@ runs:
       shell: bash
       run: |
         pip install virtualenv --upgrade
-        python -m venv venv
-        . venv/bin/activate
+        python -m venv ${{ inputs.venv-dir }}
+        source venv/bin/activate
         pip install uv
         uv pip install -U pip setuptools wheel
         # 20220124 Mimic setup_test.sh
@@ -42,7 +42,7 @@ runs:
       if: ${{ steps.cache-create.outputs.cache-hit != 'true' }}
       shell: bash
       run: |
-        . venv/bin/activate
+        source ${{ inputs.venv-dir }}/bin/activate
         pre-commit install-hooks
     - name: Save cache if (purposely) created
       if: ${{ inputs.fail-on-miss == 'false' && steps.cache-create.outputs.cache-hit != 'true' }}
