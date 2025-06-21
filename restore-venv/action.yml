@@ -58,7 +58,7 @@ runs:
       run: |
        ${{ inputs.run-command }}
     - name: Save cache if (purposely) created
-      if: ${{ inputs.fail-on-miss == 'false' && steps.cache-create.outputs.cache-hit != 'true' }}
+      if: ( ${{ inputs.fail-on-miss == 'false' && steps.cache-create.outputs.cache-hit != 'true' }} ) || ${{ inputs.run-command != '' }}
       uses: actions/cache/save@v4
       with:
         key: ${{ inputs.cache-key }}
