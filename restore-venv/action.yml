@@ -14,6 +14,9 @@ inputs:
   fail-on-miss:
     required: false
     default: "true"  # Default fail if not available
+  run-commands:
+    required: false
+    default: []  # Any commands to run and cache
 
   manual_clone_ha:
     required: false
@@ -49,6 +52,10 @@ runs:
       run: |
         source ${{ inputs.venv-dir }}/bin/activate
         pre-commit install-hooks
+    - name: Run any additional commands
+      if: ${{ inputs.run-commands != [] }}
+      shell: bash
+      run: ${{ input.run-commands }}
     - name: Save cache if (purposely) created
       if: ${{ inputs.fail-on-miss == 'false' && steps.cache-create.outputs.cache-hit != 'true' }}
       uses: actions/cache/save@v4
