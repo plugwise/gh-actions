@@ -14,9 +14,9 @@ inputs:
   fail-on-miss:
     required: false
     default: "true"  # Default fail if not available
-  run-command:
+  clone-core:
     required: false
-    default: ""  # Any command to run and cache
+    default: "false"  # Clone core (for integrations)
 
   manual_clone_ha:
     required: false
@@ -34,29 +34,35 @@ runs:
           ${{ inputs.precommit-home }}
           ${{ inputs.manual_clone_ha }}
         key: ${{ inputs.cache-key }}
+
     - name: Create Python virtual environment
       if: ${{ steps.cache-create.outputs.cache-hit != 'true' }}
       shell: bash
       run: |
+        echo ""
+        echo "** Prepare virtualenv**"
+        echo ""
         pip install virtualenv --upgrade
         python -m venv ${{ inputs.venv-dir }}
         source venv/bin/activate
+        echo ""
+        echo "** Install dependencies**"
+        echo ""
         pip install uv
         uv pip install -U pip setuptools wheel
         # 20220124 Mimic setup_test.sh
         uv pip install --upgrade -r requirements_commit.txt -r requirements_test.txt -c https://raw.githubusercontent.com/home-assistant/core/dev/homeassistant/package_constraints.txt -r https://raw.githubusercontent.com/home-assistant/core/dev/requirements_test.txt -r https://raw.githubusercontent.com/home-assistant/core/dev/requirements_test_pre_commit.txt
         uv pip install --upgrade pytest-asyncio
-    - name: Install pre-commit dependencies
-      if: ${{ steps.cache-create.outputs.cache-hit != 'true' }}
-      shell: bash
-      run: |
-        source ${{ inputs.venv-dir }}/bin/activate
+        echo ""
+        echo "** Pre-commit instal**"
+        echo ""
         pre-commit install-hooks
-    - name: Run any additional command
-      if: ${{ inputs.run-command != '' }}
-      shell: bash
-      run: |
-       ${{ inputs.run-command }}
+        echo ""
+        echo "** Cloning/preparing HA core **"
+        echo ""
+        git clone https://github.com/home-assistant/core.git ha-core
+        cp -a ha-core manual_clone_ha
+
     - name: Save cache if (purposely) created
       if: ( ${{ inputs.fail-on-miss == 'false' && steps.cache-create.outputs.cache-hit != 'true' }} ) || ( always() && ${{ inputs.run-command != '' }} )
       uses: actions/cache/save@v4
@@ -66,6 +72,7 @@ runs:
           ${{ inputs.venv-dir }}
           ${{ inputs.precommit-home }}
           ${{ inputs.manual_clone_ha }}
+
     - name: Fail job if Python cache restore failed
       if: ${{ inputs.fail-on-miss == 'true' && steps.cache-create.outputs.cache-hit != 'true' }}
       shell: bash
