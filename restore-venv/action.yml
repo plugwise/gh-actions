@@ -39,11 +39,8 @@ runs:
       if: ${{ steps.cache-create.outputs.cache-hit != 'true' }}
       shell: bash
       run: |
-        # 20250623 remove pytest_homeassistant_custom_component when present (not needed for)
-        sed -i".sedbck" '/pytest_homeassistant_custom_component/d' requirements_*.txt
-        ls -l
-        cat requirements_commit.txt || exit 0
-        cat requirements_test.txt || exit 0
+        # 20250623 remove pytest-homeassistant-custom-component when present (not needed for)
+        sed -i".sedbck" '/pytest-homeassistant-custom-component/d' requirements_*.txt
         # /20250623 remove pytest_homeassistant_custom_component when present (not needed for)
         echo ""
         echo "** Prepare virtualenv**"
