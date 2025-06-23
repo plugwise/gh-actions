@@ -51,7 +51,7 @@ runs:
         pip install uv
         uv pip install -U pip setuptools wheel
         # 20250623 remove pytest_homeassistant_custom_component when present (not needed for)
-        sed -i".sedbck" '/pytest_homeassistant_custom_component.common/d' requirements_*.txt
+        sed -i".sedbck" '/pytest_homeassistant_custom_component/d' requirements_*.txt
         # /20250623 remove pytest_homeassistant_custom_component when present (not needed for)
         uv pip install --upgrade -r requirements_commit.txt -r requirements_test.txt -c https://raw.githubusercontent.com/home-assistant/core/dev/homeassistant/package_constraints.txt -r https://raw.githubusercontent.com/home-assistant/core/dev/requirements_test.txt -r https://raw.githubusercontent.com/home-assistant/core/dev/requirements_test_pre_commit.txt
         uv pip install --upgrade pytest-asyncio
