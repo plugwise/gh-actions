@@ -18,6 +18,10 @@ inputs:
     required: false
     default: "false"  # Clone core (for integrations)
 
+  manual_clone_ha:
+    required: false
+    default: "manual_clone_ha"  # Directory for original clone
+
 runs:
   using: "composite"
   steps:
@@ -34,3 +38,4 @@ runs:
         precommit-home: ${{ inputs.precommit-home }}
         fail-on-miss: ${{ inputs.fail-on-miss }}
         clone-core: ${{ inputs.cone-core }}
+        manual_clone_ha: ${{ inputs.manual_clone_ha }}
