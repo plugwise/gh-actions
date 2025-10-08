@@ -30,7 +30,7 @@ runs:
       shell: bash
       run: |
         CACHE_KEY=${{ inputs.cache-key }}-${{ inputs.python-version}}
-        echo "cache-key=$NEW_CACHE" >> "$GITHUB_OUTPUT"
+        echo "cache-key=$CACHE_KEY" >> "$GITHUB_OUTPUT"
 
         PRE_COMMIT_HOME=${{ inputs.precommit-home }}-${{ inputs.python-version}}
         echo "precommit-home=$PRE_COMMIT_HOME" >> "$GITHUB_OUTPUT"
