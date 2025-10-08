@@ -40,6 +40,8 @@ runs:
         VENV_DIR=${{ inputs.venv-dir }}-${{ inputs.python-version}}
         echo "venv-dir=$VENV_DIR" >> "$GITHUB_OUTPUT"
 
+        echo "VENV_DIR=$VENV_DIR" >> "$GITHUB_ENV"
+
     - name: Create or reuse cache
       id: cache-create
       uses: actions/cache@v4
@@ -68,7 +70,7 @@ runs:
         echo ""
         pip install virtualenv --upgrade
         python -m venv ${{ steps.paths.outputs.venv-dir }}
-        source venv/bin/activate
+        source ${{ steps.paths.outputs.venv-dir }}/bin/activate
         echo ""
         echo "** Install dependencies**"
         echo ""
