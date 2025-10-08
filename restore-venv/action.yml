@@ -33,7 +33,7 @@ runs:
           ${{ inputs.venv-dir }}
           ${{ inputs.precommit-home }}
           ${{ inputs.manual_clone_ha }}
-        key: ${{ inputs.cache-key }}
+        key: ${{ inputs.cache-key }}-${{ inputs.python-version }}
 
     - name: Set up Python ${{ inputs.python-version}}
       id: python
@@ -75,7 +75,7 @@ runs:
       if: ( ${{ inputs.fail-on-miss == 'false' && steps.cache-create.outputs.cache-hit != 'true' }} ) || ( always() && ${{ inputs.run-command != '' }} )
       uses: actions/cache/save@v4
       with:
-        key: ${{ inputs.cache-key }}
+        key: ${{ inputs.cache-key }}-${{ inputs.python-version }}
         path: |
           ${{ inputs.venv-dir }}
           ${{ inputs.precommit-home }}
