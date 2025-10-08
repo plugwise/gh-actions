@@ -83,7 +83,7 @@ runs:
         echo ""
         PRE_COMMIT_HOME=${{ steps.paths.outputs.precommit-home }}
         pre-commit install-hooks
-        if [[ ${{ inputs.clone-core }} == 'true' ]]; then
+        if [[ "${{ inputs.clone-core }}" == 'true' ]]; then
             echo "** Cloning/preparing HA core **"
             echo ""
             git clone https://github.com/home-assistant/core.git ha-core
