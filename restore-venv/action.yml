@@ -67,7 +67,7 @@ runs:
         echo "** Prepare virtualenv**"
         echo ""
         pip install virtualenv --upgrade
-        python -m venv ${{ steps.paths.venv-dir }}
+        python -m venv ${{ steps.paths.outputs.venv-dir }}
         source venv/bin/activate
         echo ""
         echo "** Install dependencies**"
