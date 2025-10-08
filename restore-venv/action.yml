@@ -83,11 +83,14 @@ runs:
         echo ""
         PRE_COMMIT_HOME=${{ steps.paths.outputs.precommit-home }}
         pre-commit install-hooks
-        echo ""
-        echo "** Cloning/preparing HA core **"
-        echo ""
-        git clone https://github.com/home-assistant/core.git ha-core
-        cp -a ha-core manual_clone_ha
+        if [[ ${{ inputs.clone-core }} == 'true' ]]; then
+            echo "** Cloning/preparing HA core **"
+            echo ""
+            git clone https://github.com/home-assistant/core.git ha-core
+            cp -a ha-core ${{ inputs.manual_clone_ha }}
+        else
+            echo "** Skipping HA core cloning **"
+        fi
 
     - name: Save cache if (purposely) created
       if: ${{ inputs.fail-on-miss == 'false' && steps.cache-create.outputs.cache-hit != 'true' }}
