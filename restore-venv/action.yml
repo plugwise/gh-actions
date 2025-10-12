@@ -32,7 +32,7 @@ runs:
         CACHE_KEY=${{ inputs.cache-key }}-${{ inputs.python-version}}
         echo "cache-key=$CACHE_KEY" >> "$GITHUB_OUTPUT"
 
-        PRE_COMMIT_HOME=${{ inputs.precommit-home }}-${{ inputs.python-version}}
+        PRE_COMMIT_HOME=${{ inputs.precommit-home }}_${{ inputs.python-version}}
         echo "precommit-home=$PRE_COMMIT_HOME" >> "$GITHUB_OUTPUT"
 
         echo "PRE_COMMIT_HOME=$PRE_COMMIT_HOME" >> "$GITHUB_ENV"
