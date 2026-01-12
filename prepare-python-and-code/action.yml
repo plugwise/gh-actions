@@ -6,11 +6,12 @@ inputs:
     required: true
   venv-dir:
     required: true
-  precommit-home:
-    required: true
   cache-key:
     required: true
 
+  prek-home:
+    required: false
+    default: "~/.cache/prek"
   fail-on-miss:
     required: false
     default: "true"  # Default fail if not available
@@ -35,7 +36,7 @@ runs:
         cache-key: ${{ inputs.cache-key }}
         python-version: ${{ steps.python.outputs.python-version }}
         venv-dir: ${{ inputs.venv-dir }}
-        precommit-home: ${{ inputs.precommit-home }}
+        prek-home: ${{ inputs.preck-home }}
         fail-on-miss: ${{ inputs.fail-on-miss }}
         clone-core: ${{ inputs.cone-core }}
         manual_clone_ha: ${{ inputs.manual_clone_ha }}
