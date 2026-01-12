@@ -33,10 +33,10 @@ runs:
         CACHE_KEY=${{ inputs.cache-key }}-${{ inputs.python-version}}
         echo "cache-key=$CACHE_KEY" >> "$GITHUB_OUTPUT"
 
-        PRE_HOME=${{ inputs.prek-home }}_${{ inputs.python-version}}
+        PREK_HOME=${{ inputs.prek-home }}_${{ inputs.python-version}}
         echo "prek-home=$PREK_HOME" >> "$GITHUB_OUTPUT"
 
-        echo "PRE_HOME=$PRE_HOME" >> "$GITHUB_ENV"
+        echo "PREK_HOME=$PREK_HOME" >> "$GITHUB_ENV"
 
         VENV_DIR=${{ inputs.venv-dir }}-${{ inputs.python-version}}
         echo "venv-dir=$VENV_DIR" >> "$GITHUB_OUTPUT"
@@ -82,7 +82,7 @@ runs:
         echo ""
         echo "** prek (pre-commit) install **"
         echo ""
-        PRE_HOME=${{ steps.paths.outputs.prek-home }}
+        PREK_HOME=${{ steps.paths.outputs.prek-home }}
         prek install
         if [[ "${{ inputs.clone-core }}" == 'true' ]]; then
             echo "** Cloning/preparing HA core **"
