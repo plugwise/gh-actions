@@ -1,5 +1,5 @@
-name: "Restore venv and pre-commit from cache"
-description: "Restores the venv and pre-commit cache or fails"
+name: "Restore venv and prek (pre-commit) from cache"
+description: "Restores the venv and prek (pre-commit) cache or fails"
 
 inputs:
   python-version:
@@ -80,10 +80,10 @@ runs:
         uv pip install --upgrade -r requirements_commit.txt -r requirements_test.txt -c https://raw.githubusercontent.com/home-assistant/core/dev/homeassistant/package_constraints.txt -r https://raw.githubusercontent.com/home-assistant/core/dev/requirements_test.txt -r https://raw.githubusercontent.com/home-assistant/core/dev/requirements_test_pre_commit.txt
         uv pip install --upgrade pytest-asyncio
         echo ""
-        echo "** Pre-commit instal**"
+        echo "** prek (pre-commit) install **"
         echo ""
         PRE_HOME=${{ steps.paths.outputs.prek-home }}
-        pre-commit install-hooks
+        prek install
         if [[ "${{ inputs.clone-core }}" == 'true' ]]; then
             echo "** Cloning/preparing HA core **"
             echo ""
