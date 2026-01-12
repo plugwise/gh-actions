@@ -6,11 +6,12 @@ inputs:
     required: true
   venv-dir:
     required: true
-  precommit-home:
-    required: true
   cache-key:
     required: true
 
+  prek-home:
+    required: false
+    default: "~/.cache/prek"
   fail-on-miss:
     required: false
     default: "true"  # Default fail if not available
@@ -32,10 +33,10 @@ runs:
         CACHE_KEY=${{ inputs.cache-key }}-${{ inputs.python-version}}
         echo "cache-key=$CACHE_KEY" >> "$GITHUB_OUTPUT"
 
-        PRE_COMMIT_HOME=${{ inputs.precommit-home }}_${{ inputs.python-version}}
-        echo "precommit-home=$PRE_COMMIT_HOME" >> "$GITHUB_OUTPUT"
+        PRE_HOME=${{ inputs.prek-home }}_${{ inputs.python-version}}
+        echo "prek-home=$PREK_HOME" >> "$GITHUB_OUTPUT"
 
-        echo "PRE_COMMIT_HOME=$PRE_COMMIT_HOME" >> "$GITHUB_ENV"
+        echo "PRE_HOME=$PRE_HOME" >> "$GITHUB_ENV"
 
         VENV_DIR=${{ inputs.venv-dir }}-${{ inputs.python-version}}
         echo "venv-dir=$VENV_DIR" >> "$GITHUB_OUTPUT"
@@ -48,7 +49,7 @@ runs:
       with:
         path: |
           ${{ steps.paths.outputs.venv-dir }}
-          ${{ steps.paths.outputs.precommit-home }}
+          ${{ steps.paths.outputs.prek-home }}
           ${{ inputs.manual_clone_ha }}
         key: ${{ steps.paths.outputs.cache-key }}
 
@@ -81,7 +82,7 @@ runs:
         echo ""
         echo "** Pre-commit instal**"
         echo ""
-        PRE_COMMIT_HOME=${{ steps.paths.outputs.precommit-home }}
+        PRE_HOME=${{ steps.paths.outputs.prek-home }}
         pre-commit install-hooks
         if [[ "${{ inputs.clone-core }}" == 'true' ]]; then
             echo "** Cloning/preparing HA core **"
@@ -99,7 +100,7 @@ runs:
         key: ${{ steps.paths.outputs.cache-key }}
         path: |
           ${{ steps.paths.outputs.venv-dir }}
-          ${{ steps.paths.outputs.precommit-home }}
+          ${{ steps.paths.outputs.prek-home }}
           ${{ inputs.manual_clone_ha }}
 
     - name: Fail job if Python cache restore failed
