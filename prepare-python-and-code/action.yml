@@ -31,7 +31,7 @@ runs:
       with:
         python-version: ${{ inputs.python-version }}
       id: python
-    - uses: plugwise/gh-actions/restore-venv@v1
+    - uses: plugwise/gh-actions/restore-venv@v2
       with:
         cache-key: ${{ inputs.cache-key }}
         python-version: ${{ steps.python.outputs.python-version }}
