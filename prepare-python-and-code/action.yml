@@ -38,5 +38,5 @@ runs:
         venv-dir: ${{ inputs.venv-dir }}
         prek-home: ${{ inputs.prek-home }}
         fail-on-miss: ${{ inputs.fail-on-miss }}
-        clone-core: ${{ inputs.cone-core }}
+        clone-core: ${{ inputs.clone-core }}
         manual_clone_ha: ${{ inputs.manual_clone_ha }}
