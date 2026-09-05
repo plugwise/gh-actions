@@ -31,7 +31,7 @@ runs:
       with:
         python-version: ${{ inputs.python-version }}
       id: python
-    - uses: plugwise/gh-actions/restore-venv@v7 # can't be pinned as its in the same repo
+    - uses: plugwise/gh-actions/restore-venv@v8 # can't be pinned as its in the same repo
       with:
         cache-key: ${{ inputs.cache-key }}
         python-version: ${{ steps.python.outputs.python-version }}
