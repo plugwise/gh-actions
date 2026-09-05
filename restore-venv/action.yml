@@ -87,7 +87,7 @@ runs:
         if [[ "${{ inputs.clone-core }}" == 'true' ]]; then
             echo "** Cloning/preparing HA core **"
             echo ""
-            git clone https://github.com/home-assistant/core.git ha-core
+            git clone --depth 1 --no-tags --branch master https://github.com/home-assistant/core.git ha-core
             cp -a ha-core ${{ inputs.manual_clone_ha }}
         else
             echo "** Skipping HA core cloning **"
